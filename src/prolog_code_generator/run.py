@@ -15,4 +15,4 @@ if __name__ == "__main__":
          kupsko.code_to_file(kupsko1,output_file)
     else:
          kupsko.code_to_file(kupsko1)
-
+    input('Press ENTER to exit')
