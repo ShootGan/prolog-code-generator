@@ -1,4 +1,4 @@
-from code_generator import CodeGenerator
+from prolog_code_generator import CodeGenerator
 from excel_template import get_template
 
 if __name__ == "__main__":
