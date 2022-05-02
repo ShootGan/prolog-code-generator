@@ -1,5 +1,8 @@
-import CodeGenerator
-from excel_template import get_template
+from CodeGenerator import CodeGenerator
+
+
+
+from .excel_template import get_template
 
 if __name__ == "__main__":
     filename = input("Pass filename")

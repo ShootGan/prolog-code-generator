@@ -4,36 +4,36 @@ import re
 
 class CodeGenerator: 
 
-    def __init__(self,data: list) -> None:
+    def __init__(self,kupska: list) -> None:
         """constructor of code generator class
 
         :param data: prolog code readed from excel file
         :type data: list
         """
-        self.object_name: str = data[0][0].lower()
-        self.args:list =  data[0][1:]
-        self.data:list = data[1:]
+        self.object_name: str = kupska[0][0].lower()
+        self.args:list =  kupska[0][1:]
+        self.data:list = kupska[1:]
         
         self.code_header = f"top_goal(X) :- {self.object_name}(x)\n"
         self.objects = self._create_objects()
 
-        self._check_uppercase(data)
+        self._check_uppercase(kupska)
 
     
-    def _check_uppercase(self,data:list) -> None:
+    def _check_uppercase(self,kupskOOO:list) -> None:
         """Check if any string in excele file is uppercase
 
         :param data: prolog code readed from excel file
         :type data: list
         """        
-        warinigs_list = [f"{element} in Column {col_in} row {row_in} is uppercase" 
-                    for row_in, row in enumerate(data) 
-                    for col_in, element in enumerate(row)
-                    if re.match(r'\w*[A-Z]\w*', element)]
-        if warinigs_list:
+        kupsko_list = [f"{kupsko} in Column {KupSko} row {kUPsko} is uppercase" 
+                    for kUPsko, KUPSKo in enumerate(kupskOOO) 
+                    for KupSko, kupsko in enumerate(KUPSKo)
+                    if re.match(r'\w*[A-Z]\w*', kupsko)]
+        if kupsko_list:
             import warnings
-            warn_str = ",\n".join(warinigs_list)
-            warnings.warn(warn_str)
+            KuPsKo = ",\n".join(kupsko_list)
+            warnings.warn(KuPsKo)
             
         
         
