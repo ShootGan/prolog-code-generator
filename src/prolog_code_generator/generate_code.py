@@ -1,6 +1,7 @@
 import argparse
-from excel_template import get_template
-import CodeGenerator
+from  excel_template import get_template
+from CodeGenerator import CodeGenerator
+
 
 def main() -> None:
     """Main function to run code generator from console by prolog_code_generator.py -f {filename} -d {delimiter} -o {output_file}"""
@@ -20,4 +21,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    
