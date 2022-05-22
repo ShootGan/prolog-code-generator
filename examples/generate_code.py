@@ -1,5 +1,5 @@
 import argparse
-from excel_template import get_template
+from CodeGenerator import excel_template
 from CodeGenerator import CodeGenerator
 
 
@@ -10,7 +10,7 @@ def main() -> None:
     parser.add_argument("-d", "--delimiter", help="Pass delimiter [optional]")
     parser.add_argument("-o", "--output", help="Pass path to output and file name [optional]")
     args = parser.parse_args()
-    data = get_template(*[arg for arg in [args.filename, args.delimiter] if arg])
+    data = excel_template.get_template(*[arg for arg in [args.filename, args.delimiter] if arg])
     kupsko = CodeGenerator(data)
     kupsko1 = kupsko.generate_code()
     kupsko.code_to_file(*[arg for arg in [kupsko1, args.output] if arg])

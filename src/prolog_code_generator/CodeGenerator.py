@@ -13,11 +13,16 @@ class CodeGenerator:
         self.args: list = data[0][1:]
         self.data: list = data[1:]
 
-        self.code_header = f"top_goal(X) :- {self.object_name}(x)\n"
+        self.code_header = f"top_goal(X) :- {self.object_name}(X).\n"
         self.objects = self._create_objects()
 
-        self._check_uppercase(data)
+        if self._check_uppercase(data):
+            data = self._repair_data(data)
 
+    @staticmethod
+    def _repair_data(data):
+        return [[element.lower().replace(" ","_") for element in row ] for row in data]
+    
     @staticmethod
     def _check_uppercase(data: list) -> None:
         """Check if any string in excele file is uppercase
@@ -25,14 +30,22 @@ class CodeGenerator:
         :param data: prolog code readed from excel file
         :type data: list
         """
-        kupsko_list = [f"{element} in Column {col_in} row {row_in} is uppercase"
-                       for row_in, row in enumerate(data)
-                       for col_in, element in enumerate(row)
-                       if re.match(r'\w*[A-Z]\w*', element)]
-        if kupsko_list:
+        warning_string =lambda element,col_in,row_in,error:  f"{element} in Column {col_in} row {row_in} {error}"
+        error_list = []
+        for row_in, row in enumerate(data):
+            for col_in, element in enumerate(row):
+                if re.match(r'\w*[A-Z]\w*', element):
+                    error_list.append(warning_string(element,col_in,row_in,"is uppercase"))
+                if " " in element:
+                    error_list.append(warning_string(element,col_in,row_in,"contain space"))
+                if "." in element:
+                    error_list.append(warning_string(element,col_in,row_in,"contain dot"))
+        if error_list:
             import warnings
-            KuPsKo = ",\n".join(kupsko_list)
-            warnings.warn(KuPsKo)
+            error = ",\n".join(error_list)
+            warnings.warn(error)
+            return True
+        return False
 
     def _create_objects(self) -> list:
         """Create objects 
@@ -41,7 +54,7 @@ class CodeGenerator:
         :rtype: list
         """
         objects = []
-        for row in self.data:
+        for row in self.data: 
             arg_list = []
             for index, element in enumerate(row[1:]):
                 string = f"\t{self.args[index]}({element})"
